@@ -27,8 +27,8 @@ def analyse_virustotal(records):
         return pd.DataFrame()
 
     df = pd.DataFrame(records)
-    df["malicious"] = pd.to_numeric(df.get("malicious", 0), errors="coerce").fillna(0).astype(int)
-    df["suspicious"] = pd.to_numeric(df.get("suspicious", 0), errors="coerce").fillna(0).astype(int)
+    df["malicious"] = pd.to_numeric(df["malicious"], errors="coerce").fillna(0).astype(int) if "malicious" in df.columns else 0
+    df["suspicious"] = pd.to_numeric(df["suspicious"], errors="coerce").fillna(0).astype(int) if "suspicious" in df.columns else 0
     df["threat_score"] = df["malicious"] * 2 + df["suspicious"]
     df["is_threat"] = df["malicious"] >= VT_MALICIOUS_THRESHOLD
     df.sort_values("threat_score", ascending=False, inplace=True)
