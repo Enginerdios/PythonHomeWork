@@ -37,7 +37,7 @@ def save_report(vt_df, suri_df):
     json_path = REPORTS_DIR / f"report_{ts}.json"
     report = {
         "generated_at": ts,
-        "virustotal":   vt_df.to_dict(orient="records") if not vt_df.empty else [],
+        "virustotal": vt_df.fillna("N/A").to_dict(orient="records") if not vt_df.empty else [],
         "suricata":     suri_df.to_dict(orient="records") if not suri_df.empty else [],
         "blocked_ips":  sorted(BLOCKED_IPS),
     }

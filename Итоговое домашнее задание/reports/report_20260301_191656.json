@@ -1,5 +1,5 @@
 {
-  "generated_at": "20260301_185814",
+  "generated_at": "20260301_191656",
   "virustotal": [
     {
       "target": "185.220.101.45",
@@ -11,7 +11,7 @@
       "undetected": 30,
       "country": "DE",
       "as_owner": "Stiftung Erneuerbare Freiheit",
-      "registrar": NaN,
+      "registrar": "N/A",
       "threat_score": 32,
       "is_threat": true
     },
@@ -25,7 +25,7 @@
       "undetected": 31,
       "country": "MC",
       "as_owner": "Flyservers S.A.",
-      "registrar": NaN,
+      "registrar": "N/A",
       "threat_score": 27,
       "is_threat": true
     },
@@ -38,7 +38,7 @@
       "harmless": 48,
       "undetected": 31,
       "country": "N/A",
-      "as_owner": NaN,
+      "as_owner": "N/A",
       "registrar": "PDR Ltd. d/b/a PublicDomainRegistry.com",
       "threat_score": 27,
       "is_threat": true
@@ -53,7 +53,7 @@
       "undetected": 33,
       "country": "BG",
       "as_owner": "Neterra Ltd.",
-      "registrar": NaN,
+      "registrar": "N/A",
       "threat_score": 3,
       "is_threat": false
     },
@@ -67,7 +67,7 @@
       "undetected": 33,
       "country": "HK",
       "as_owner": "N/A",
-      "registrar": NaN,
+      "registrar": "N/A",
       "threat_score": 1,
       "is_threat": false
     },
@@ -80,7 +80,7 @@
       "harmless": 66,
       "undetected": 27,
       "country": "N/A",
-      "as_owner": NaN,
+      "as_owner": "N/A",
       "registrar": "MarkMonitor Inc.",
       "threat_score": 0,
       "is_threat": false
