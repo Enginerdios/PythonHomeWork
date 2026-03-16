@@ -45,6 +45,8 @@ def _vt_get(endpoint):
         log.error("VT HTTP-ошибка для %s: %s", endpoint, exc)
     except requests.RequestException as exc:
         log.error("VT ошибка запроса для %s: %s", endpoint, exc)
+    except ValueError as exc:                                        
+        log.error("VT: некорректный JSON-ответ для %s: %s", endpoint, exc)
     return None
 
 
@@ -172,15 +174,19 @@ def parse_suricata_logs(log_path):
         return pd.DataFrame()
 
     events = []
-    with open(log_path, encoding="utf-8") as fh:
-        for line_no, line in enumerate(fh, start=1):
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                events.append(json.loads(line))
-            except json.JSONDecodeError as exc:
-                log.warning("Пропуск строки %d: %s", line_no, exc)
+    try:
+        with open(log_path, encoding="utf-8") as fh:
+            for line_no, line in enumerate(fh, start=1):
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    events.append(json.loads(line))
+                except json.JSONDecodeError as exc:
+                    log.warning("Пропуск строки %d: %s", line_no, exc)
+    except (OSError, UnicodeDecodeError) as exc:
+        log.error("Не удалось открыть файл логов Suricata %s: %s", log_path, exc)
+        return pd.DataFrame()
 
     if not events:
         return pd.DataFrame()

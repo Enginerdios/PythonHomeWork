@@ -32,6 +32,12 @@ def analyse_virustotal(records):
     df["threat_score"] = df["malicious"] * 2 + df["suspicious"]
     df["is_threat"] = df["malicious"] >= VT_MALICIOUS_THRESHOLD
     df.sort_values("threat_score", ascending=False, inplace=True)
+    threats = df[df["is_threat"]]
+    for _, row in threats.iterrows():
+        log.warning(
+            "Угроза VT: %s (%s) — malicious=%d, threat_score=%d",
+            row["target"], row["type"], row["malicious"], row["threat_score"]
+        )
     return df.reset_index(drop=True)
 
 
@@ -63,6 +69,11 @@ def analyse_suricata(df):
                 "timestamp":   str(row.get("timestamp", "")),
                 "is_threat":   True,
             })
+            log.warning(
+                "Угроза Suricata [alert]: src=%s -> %s, severity=%s",
+                row.get("src_ip", "N/A"), row.get("alert_signature", "N/A"),
+                row.get("alert_severity", "?")
+            )
 
     # Правило 2: повторяющиеся DNS-запросы (>= 3 к одному домену)
     dns_events = df[df["event_type"] == "dns"].copy()
@@ -84,5 +95,9 @@ def analyse_suricata(df):
                 "timestamp":   "N/A",
                 "is_threat":   True,
             })
+            log.warning(
+                "Угроза Suricata [repeated_dns]: src=%s -> %s (%dx)",
+                row["src_ip"], row["dns_rrname"], row["query_count"]
+            )
 
     return pd.DataFrame(threats)
